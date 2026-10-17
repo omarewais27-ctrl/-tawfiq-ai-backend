@@ -1,0 +1,6 @@
+{
+  "name": "tawfiq-ai-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Backend وسيط آمن يربط تطبيق توفيق بنموذج OpenAI"
+}
