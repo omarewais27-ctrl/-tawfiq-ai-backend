@@ -5,6 +5,21 @@
     { "src": "tutor.js", "use": "@vercel/node" }
   ],
   "routes": [
+    {
+      "src": "/api/(chat|tutor)",
+      "methods": ["OPTIONS"],
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type"
+      },
+      "status": 204
+    },
+    {
+      "src": "/api/(chat|tutor)",
+      "headers": { "Access-Control-Allow-Origin": "*" },
+      "continue": true
+    },
     { "src": "/api/chat", "dest": "/chat.js" },
     { "src": "/api/tutor", "dest": "/tutor.js" }
   ]
