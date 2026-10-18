@@ -2,25 +2,13 @@
   "version": 2,
   "builds": [
     { "src": "chat.js", "use": "@vercel/node" },
-    { "src": "tutor.js", "use": "@vercel/node" }
+    { "src": "tutor.js", "use": "@vercel/node" },
+    { "src": "index.html", "use": "@vercel/static" }
   ],
   "routes": [
-    {
-      "src": "/api/(chat|tutor)",
-      "methods": ["OPTIONS"],
-      "headers": {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "POST, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type"
-      },
-      "status": 204
-    },
-    {
-      "src": "/api/(chat|tutor)",
-      "headers": { "Access-Control-Allow-Origin": "*" },
-      "continue": true
-    },
+    { "handle": "filesystem" },
     { "src": "/api/chat", "dest": "/chat.js" },
-    { "src": "/api/tutor", "dest": "/tutor.js" }
+    { "src": "/api/tutor", "dest": "/tutor.js" },
+    { "src": "/", "dest": "/index.html" }
   ]
 }
