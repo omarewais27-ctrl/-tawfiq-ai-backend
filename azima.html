@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>عزيمة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: dark;
+  --bg:#0a0a0e; --bg2:#121218; --card:#17171f; --card2:#1d1d26;
+  --gold:#d4af5a; --gold-dim:#8a7138; --crimson:#c93a3a; --crimson2:#e05252;
+  --text:#f1ede3; --muted:#8a8a96; --line:#2a2a34;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);}
+*{box-sizing:border-box;}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:'Cairo',sans-serif; min-height:100%;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg);}
+.wrap{max-width:480px;margin:0 auto;padding:18px 16px 60px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 2px 18px;}
+.brand{font-weight:900;font-size:20px;letter-spacing:.5px;color:var(--gold);}
+.date{font-size:12px;color:var(--muted);}
+
+.hero{
+  background:radial-gradient(120% 140% at 50% -10%, #241d10 0%, var(--card) 55%, var(--card) 100%);
+  border:1px solid var(--line); border-radius:18px; padding:30px 18px 24px;
+  text-align:center; position:relative; overflow:hidden;
+}
+.hero::after{content:"";position:absolute;inset:0;border-radius:18px;
+  box-shadow:inset 0 0 60px rgba(212,175,90,.06);pointer-events:none;}
+.hero .label{font-size:13px;color:var(--muted);margin-bottom:6px;}
+.hero .num{font-size:76px;font-weight:900;line-height:1;color:var(--gold);
+  text-shadow:0 0 30px rgba(212,175,90,.35);}
+.hero .unit{font-size:16px;color:var(--text);margin-top:2px;font-weight:700;}
+.hero .quote{margin-top:16px;font-size:13.5px;color:var(--muted);line-height:1.9;padding:0 6px;}
+
+.statsrow{display:flex;gap:10px;margin-top:12px;}
+.statbox{flex:1;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center;}
+.statbox b{display:block;font-size:22px;color:var(--text);font-weight:900;}
+.statbox span{font-size:11.5px;color:var(--muted);}
+
+.sec{margin-top:26px;}
+.sec h2{font-size:15px;font-weight:700;margin:0 0 10px;color:var(--text);display:flex;align-items:center;gap:8px;}
+.sec h2 em{font-style:normal;color:var(--gold);}
+
+.emergency{
+  width:100%;border:none;border-radius:16px;padding:18px;margin-top:22px;
+  background:linear-gradient(180deg,var(--crimson2),var(--crimson));
+  color:#fff;font-family:inherit;font-size:16px;font-weight:900;
+  box-shadow:0 10px 24px rgba(201,58,58,.35);cursor:pointer;
+}
+.emergency small{display:block;font-weight:400;font-size:12px;opacity:.85;margin-top:3px;}
+
+.badges{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;}
+.badge{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 4px;text-align:center;}
+.badge.unlocked{border-color:var(--gold-dim);background:linear-gradient(180deg,#201a0c,var(--card));}
+.badge .ic{font-size:20px;}
+.badge .nm{font-size:10.5px;color:var(--text);margin-top:4px;font-weight:700;}
+.badge .dy{font-size:9.5px;color:var(--muted);}
+.badge.locked .ic,.badge.locked .nm{opacity:.35;}
+
+.risklist{display:flex;flex-direction:column;gap:8px;}
+.riskitem{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px 13px;display:flex;justify-content:space-between;align-items:center;}
+.riskitem b{font-size:14px;}
+.riskitem .alt{font-size:11px;color:var(--gold);background:none;border:1px solid var(--gold-dim);border-radius:8px;padding:5px 10px;font-family:inherit;}
+.addrow{display:flex;gap:8px;margin-top:10px;}
+.addrow input{flex:1;background:var(--card2);border:1px solid var(--line);border-radius:10px;color:var(--text);padding:9px 10px;font-family:inherit;font-size:13px;}
+.addrow button{background:var(--gold);border:none;border-radius:10px;padding:9px 16px;font-weight:700;font-family:inherit;}
+
+textarea{width:100%;background:var(--card);border:1px solid var(--line);border-radius:14px;color:var(--text);
+  padding:12px 14px;font-family:inherit;font-size:13.5px;min-height:80px;resize:vertical;}
+.savehint{font-size:11px;color:var(--muted);margin-top:5px;}
+
+.history{display:flex;flex-direction:column;gap:8px;}
+.hist-item{display:flex;align-items:center;gap:10px;}
+.hist-bar{height:10px;border-radius:6px;background:linear-gradient(90deg,var(--gold-dim),var(--gold));}
+.hist-item span{font-size:11px;color:var(--muted);white-space:nowrap;}
+
+.resetbtn{width:100%;margin-top:26px;background:transparent;border:1px solid var(--line);color:var(--muted);
+  border-radius:12px;padding:12px;font-family:inherit;font-size:12.5px;}
+
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(3px);
+  display:flex;align-items:flex-end;justify-content:center;z-index:50;}
+.overlay.hidden{display:none;}
+.sheet{width:100%;max-width:480px;background:var(--bg2);border-radius:20px 20px 0 0;
+  padding:22px 20px calc(24px + env(safe-area-inset-bottom,0px));max-height:85vh;overflow-y:auto;}
+.sheet h3{margin:0 0 4px;font-size:18px;color:var(--crimson2);font-weight:900;}
+.sheet p.sub{color:var(--muted);font-size:13px;margin:0 0 18px;}
+.breathe{width:140px;height:140px;margin:10px auto 16px;border-radius:50%;
+  background:radial-gradient(circle,rgba(212,175,90,.25),rgba(212,175,90,.05));
+  border:1.5px solid var(--gold-dim);display:flex;align-items:center;justify-content:center;
+  font-size:14px;color:var(--gold);font-weight:700;transition:transform 4s ease;}
+.altlist{display:flex;flex-direction:column;gap:8px;margin-top:4px;}
+.altlist div{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:13.5px;}
+.closebtn{width:100%;margin-top:18px;background:var(--card2);border:1px solid var(--line);color:var(--text);
+  border-radius:12px;padding:12px;font-family:inherit;font-weight:700;}
+.disguise{position:fixed;inset:0;background:#fff;color:#222;z-index:100;font-family:-apple-system,Arial,sans-serif;
+  padding:18px;padding-top:calc(18px + env(safe-area-inset-top,0px));overflow-y:auto;}
+.disguise.hidden{display:none;}
+.dg-top{display:flex;justify-content:space-between;font-size:15px;font-weight:600;border-bottom:1px solid #e5e5e5;padding-bottom:10px;margin-bottom:14px;}
+.dg-item{padding:12px 0;border-bottom:1px solid #eee;}
+.dg-item b{font-size:14px;}
+.dg-item p{margin:4px 0 0;font-size:13px;color:#666;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar"><div class="brand">عزيمة</div><div style="display:flex;align-items:center;gap:10px;"><div class="date" id="today"></div><button id="hideBtn" style="background:none;border:1px solid var(--line);color:var(--muted);border-radius:8px;padding:5px 9px;font-size:13px;font-family:inherit;">🙈</button></div></div>
+
+  <div class="hero">
+    <div class="label">صامد منذ</div>
+    <div class="num" id="streakNum">0</div>
+    <div class="unit">يوم</div>
+    <div class="quote" id="quote"></div>
+  </div>
+
+  <div class="statsrow">
+    <div class="statbox"><b id="longestNum">0</b><span>أطول فترة صمود</span></div>
+    <div class="statbox"><b id="attemptsNum">0</b><span>عدد المحاولات</span></div>
+  </div>
+  <div class="riskitem" id="topTriggerBox" style="margin-top:10px;display:none;">
+    <b style="font-size:12.5px;color:var(--muted);font-weight:400;">محفزك الأكتر تكرارًا: <span id="topTriggerText" style="color:var(--gold);font-weight:700;"></span></b>
+  </div>
+
+  <button class="emergency" id="sosBtn">🆘 لحظة ضعف؟ اضغط هنا الآن<small>تنفّس، اصمد، كمّل الطريق</small></button>
+
+  <div class="sec">
+    <h2>💭 <em>ليه بتكمل؟</em></h2>
+    <div class="risklist" id="reasonsList"></div>
+    <div class="addrow">
+      <input type="text" id="reasonInput" placeholder="اكتب سبب شخصي ليك...">
+      <button onclick="addReason()">إضافة</button>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2>🏆 <em>الأوسمة</em></h2>
+    <div class="badges" id="badges"></div>
+  </div>
+
+  <div class="sec">
+    <h2>⏰ <em>أوقات الخطر</em></h2>
+    <div class="risklist" id="riskList"></div>
+    <div class="addrow">
+      <input type="time" id="riskInput">
+      <button onclick="addRisk()">إضافة</button>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2>📝 <em>يوميتك</em></h2>
+    <textarea id="noteBox" placeholder="اكتب إحساسك النهارده..."></textarea>
+    <div class="savehint">بيتحفظ أوتوماتيك</div>
+  </div>
+
+  <div class="sec" id="histSec">
+    <h2>📊 <em>رحلة المعارك السابقة</em></h2>
+    <div class="history" id="history"></div>
+  </div>
+
+  <button class="resetbtn" id="resetBtn">سجّل انتكاسة وابدأ من جديد</button>
+</div>
+
+<div class="disguise hidden" id="disguiseScreen">
+  <div class="dg-top"><span>الملاحظات</span><span id="dgTime"></span></div>
+  <div class="dg-item"><b>تسوق</b><p>لبن، عيش، بيض، فاكهة</p></div>
+  <div class="dg-item"><b>مشاوير النهارده</b><p>أجيب الغسيل من المغسلة الساعة ٤</p></div>
+  <div class="dg-item"><b>شغل</b><p>أبعت الإيميل لمحمد قبل الساعة ٦</p></div>
+  <div class="dg-item"><b>تذكير</b><p>موعد الدكتور يوم الخميس الساعة ٥ العصر</p></div>
+</div>
+
+<div class="overlay hidden" id="sosOverlay">
+  <div class="sheet">
+    <h3>إنت أقوى من اللحظة دي</h3>
+    <p class="sub">ركّز على التنفس لثواني، واختار بديل تعمله دلوقتي</p>
+    <div class="breathe" id="breatheCircle">شهيق</div>
+    <div class="altlist" id="sosReasons"></div>
+    <div class="altlist" id="altList"></div>
+    <button class="closebtn" onclick="document.getElementById('sosOverlay').classList.add('hidden')">أنا تمام، كمّل يومك 💪</button>
+  </div>
+</div>
+
+<script>
+const DAY=86400000;
+const DEFAULT_DATA={start:Date.now(),longest:0,history:[],notes:{},riskTimes:[],reasons:[],triggers:[]};
+function load(){try{const d=JSON.parse(localStorage.getItem('azima_data'));return d&&d.start?d:structuredClone(DEFAULT_DATA);}catch(e){return structuredClone(DEFAULT_DATA);}}
+function save(d){try{localStorage.setItem('azima_data',JSON.stringify(d));}catch(e){}}
+let data=load();
+
+const QUOTES=["الصبر مفتاح الفرج، وكل يوم تصمد فيه نصر جديد.","قوتك مش في إنك ماتقعش، قوتك في إنك تقوم تاني.","النفس اللي بتجاهد نفسها دي أعظم معركة.","خطوة صغيرة النهارده = مسافة كبيرة بعد شهر.","إنت مش معركتك، إنت اللي بتكسبها.","﴿وَمَا أُبَرِّئُ نَفْسِي إِنَّ النَّفْسَ لَأَمَّارَةٌ بِالسُّوءِ إِلَّا مَا رَحِمَ رَبِّي﴾ — يوسف ٥٣","﴿إِنَّ اللَّهَ لَا يُغَيِّرُ مَا بِقَوْمٍ حَتَّىٰ يُغَيِّرُوا مَا بِأَنفُسِهِمْ﴾ — الرعد ١١","﴿لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا﴾ — البقرة ٢٨٦","﴿فَإِنَّ مَعَ الْعُسْرِ يُسْرًا﴾ — الشرح ٥","المؤمن القوي خير وأحب إلى الله من المؤمن الضعيف — حديث شريف"];
+const BADGES=[{d:1,n:"الخطوة",i:"🔥"},{d:3,n:"البداية",i:"⚔️"},{d:7,n:"المحارب",i:"🛡️"},{d:14,n:"الصامد",i:"🗡️"},{d:30,n:"الأسطورة",i:"👑"},{d:60,n:"الفاتح",i:"🏔️"},{d:90,n:"الفولاذ",i:"⚙️"},{d:180,n:"الخالد",i:"🦅"}];
+const ALTS=["اتمشى 10 دقايق بره البيت","اعمل 20 ضغط أو أي تمرين سريع","اتوضأ وصلي ركعتين","اتصل بصاحبك وافتح معاه أي موضوع","اشرب مية باردة واغسل وشك","افتح كتاب أو بودكاست لمدة ربع ساعة"];
+
+function fmtDate(){const o={weekday:'long',year:'numeric',month:'long',day:'numeric'};document.getElementById('today').textContent=new Date().toLocaleDateString('ar-EG',o);}
+function streakDays(){return Math.max(0,Math.floor((Date.now()-data.start)/DAY));}
+
+function render(){
+  const s=streakDays();
+  document.getElementById('streakNum').textContent=s;
+  document.getElementById('longestNum').textContent=Math.max(data.longest,s);
+  document.getElementById('attemptsNum').textContent=data.history.length;
+  document.getElementById('quote').textContent=QUOTES[new Date().getDate()%QUOTES.length];
+
+  document.getElementById('badges').innerHTML=BADGES.map(b=>{
+    const un=s>=b.d;
+    return `<div class="badge ${un?'unlocked':'locked'}"><div class="ic">${un?b.i:'🔒'}</div><div class="nm">${b.n}</div><div class="dy">${b.d} يوم</div></div>`;
+  }).join('');
+
+  document.getElementById('riskList').innerHTML=data.riskTimes.length? data.riskTimes.map((t,idx)=>
+    `<div class="riskitem"><b>${t}</b><button class="alt" onclick="showAlt(${idx})">بديل سريع</button></div>`).join('')
+    : `<div class="riskitem" style="opacity:.5">محددتش أوقات لسه</div>`;
+
+  document.getElementById('reasonsList').innerHTML=data.reasons.length? data.reasons.map(r=>
+    `<div class="riskitem"><b style="font-size:13px">💭 ${r}</b></div>`).join('')
+    : `<div class="riskitem" style="opacity:.5">اكتب أسبابك الحقيقية عشان تفضل تشوفها وقت الضعف</div>`;
+
+  if(data.triggers.length){
+    const counts={};
+    data.triggers.forEach(t=>counts[t]=(counts[t]||0)+1);
+    const top=Object.entries(counts).sort((a,b)=>b[1]-a[1])[0][0];
+    document.getElementById('topTriggerBox').style.display='flex';
+    document.getElementById('topTriggerText').textContent=top;
+  }
+
+  const todayKey=new Date().toISOString().slice(0,10);
+  document.getElementById('noteBox').value=data.notes[todayKey]||'';
+
+  const hist=data.history.slice(-6).reverse();
+  const max=Math.max(1,...hist.map(h=>h.len));
+  document.getElementById('history').innerHTML=hist.length? hist.map(h=>
+    `<div class="hist-item"><div class="hist-bar" style="width:${10+(h.len/max)*70}%"></div><span>${h.len} يوم — ${h.date}</span></div>`).join('')
+    : `<div style="color:var(--muted);font-size:12.5px">لسه مفيش تاريخ، إنت في أول رحلتك 🚀</div>`;
+}
+
+function addRisk(){
+  const v=document.getElementById('riskInput').value;
+  if(!v) return;
+  data.riskTimes.push(v); data.riskTimes.sort();
+  save(data); render();
+  document.getElementById('riskInput').value='';
+}
+function addReason(){
+  const v=document.getElementById('reasonInput').value.trim();
+  if(!v) return;
+  data.reasons.push(v);
+  save(data); render();
+  document.getElementById('reasonInput').value='';
+}
+function showAlt(){
+  document.getElementById('sosOverlay').classList.remove('hidden');
+  document.getElementById('sosReasons').innerHTML = data.reasons.length
+    ? data.reasons.map(r=>`<div style="border-color:var(--gold-dim)">💭 ${r}</div>`).join('')
+    : `<div>فاكر ليه بدأت أصلاً؟ اكتب أسبابك تحت عشان تلاقيها هنا</div>`;
+  document.getElementById('altList').innerHTML=shuffle(ALTS).slice(0,3).map(a=>`<div>${a}</div>`).join('');
+  startSOS();
+}
+
+let noteTimer;
+document.getElementById('noteBox').addEventListener('input',e=>{
+  clearTimeout(noteTimer);
+  noteTimer=setTimeout(()=>{
+    const k=new Date().toISOString().slice(0,10);
+    data.notes[k]=e.target.value; save(data);
+  },500);
+});
+
+document.getElementById('resetBtn').addEventListener('click',()=>{
+  if(!confirm('متأكد؟ هيتسجل يوم انتكاسة وتبدأ العداد من الأول.')) return;
+  const trig=prompt('إيه اللي كان حاصل قبلها؟ (ملل / توتر / وحدة / سكرولينج... إلخ)');
+  if(trig && trig.trim()) data.triggers.push(trig.trim());
+  const len=streakDays();
+  if(len>0){
+    data.history.push({len,date:new Date().toLocaleDateString('ar-EG',{month:'short',day:'numeric'})});
+    if(len>data.longest) data.longest=len;
+  }
+  data.start=Date.now();
+  save(data); render();
+});
+
+document.getElementById('sosBtn').addEventListener('click',()=>{
+  document.getElementById('sosOverlay').classList.remove('hidden');
+  document.getElementById('sosReasons').innerHTML = data.reasons.length
+    ? data.reasons.map(r=>`<div style="border-color:var(--gold-dim)">💭 ${r}</div>`).join('')
+    : `<div>فاكر ليه بدأت أصلاً؟ اكتب أسبابك تحت القائمة عشان تلاقيها هنا وقت الضعف</div>`;
+  document.getElementById('altList').innerHTML=shuffle(ALTS).slice(0,3).map(a=>`<div>${a}</div>`).join('');
+  startSOS();
+});
+function shuffle(a){return [...a].sort(()=>Math.random()-.5);}
+
+let breatheInt;
+function startSOS(){
+  const el=document.getElementById('breatheCircle');
+  clearInterval(breatheInt);
+  const phases=[["شهيق",1.15],["احبس",1.15],["زفير",0.85],["استرخي",0.85]];
+  let i=0;
+  const step=()=>{el.textContent=phases[i][0];el.style.transform=`scale(${phases[i][1]})`;i=(i+1)%phases.length;};
+  step(); breatheInt=setInterval(step,4000);
+}
+
+document.getElementById('hideBtn').addEventListener('click',()=>{
+  document.getElementById('dgTime').textContent=new Date().toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'});
+  document.getElementById('disguiseScreen').classList.remove('hidden');
+});
+document.getElementById('disguiseScreen').addEventListener('click',()=>{
+  document.getElementById('disguiseScreen').classList.add('hidden');
+});
+
+fmtDate(); render();
+</script>
+</body>
+</html>
